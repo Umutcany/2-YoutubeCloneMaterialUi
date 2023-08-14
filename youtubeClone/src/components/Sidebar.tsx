@@ -1,14 +1,22 @@
 import { Stack } from "@mui/material";
-
+import { useState } from "react";
 import { categories } from "../utils/constants";
 
-const Sidebar = ({ selectedCategory, setSelectedCategory }) => {
+interface SidebarProps {
+  selectedCategory: string;
+  setSelectedCategory: (category: string) => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({
+  selectedCategory,
+  setSelectedCategory,
+}) => {
   return (
     <Stack
       direction="row"
       sx={{
         overflowY: "auto",
-        height: { sx: "auto", md: "95%" },
+        height: { xs: "auto", md: "95%" },
         flexDirection: { md: "column" },
       }}
     >
@@ -18,7 +26,8 @@ const Sidebar = ({ selectedCategory, setSelectedCategory }) => {
           onClick={() => setSelectedCategory(category.name)}
           key={index}
           style={{
-            background: category.name === selectedCategory && "#FC1503", // Burada && Then anlamına geliyor yani category.name eşitse selected category'e şu renkleri uygula gibi.
+            background:
+              category.name === selectedCategory ? "#FC1503" : undefined,
             color: "white",
           }}
         >
@@ -32,7 +41,7 @@ const Sidebar = ({ selectedCategory, setSelectedCategory }) => {
           </span>
           <span
             style={{
-              opacity: category.name === selectedCategory ? "1" : "0.8",
+              opacity: category.name === selectedCategory ? 1 : 0.8,
             }}
           >
             {category.name}
