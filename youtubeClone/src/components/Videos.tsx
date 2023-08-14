@@ -1,11 +1,22 @@
 import React from "react";
+import { Stack, Box } from "@mui/material";
+import { ChannelCard, VideoCard } from "./";
 
-interface Videosprops {
-  videos: any;
+interface VideosProps {
+  videos: any[];
 }
-const Videos: React.FC<Videosprops> = ({ videos }) => {
-  console.log(videos);
-  return <div>Videos</div>;
+
+const Videos: React.FC<VideosProps> = ({ videos }) => {
+  return (
+    <Stack direction="row" flexWrap="wrap" justifyContent="start" gap={2}>
+      {videos.map((item: any, index: number) => (
+        <Box key={index}>
+          {item.id.videoId && <VideoCard video={item} />}
+          {/* {item.id.channelId && <ChannelCard channelDetail={item} />} */}
+        </Box>
+      ))}
+    </Stack>
+  );
 };
 
 export default Videos;
