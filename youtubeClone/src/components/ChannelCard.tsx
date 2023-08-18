@@ -7,9 +7,13 @@ import { demoProfilePicture } from "../utils/constants";
 
 interface ChannelCardProps {
   channelDetail: any;
+  marginTop: string;
 }
 
-const ChannelCard: React.FC<ChannelCardProps> = ({ channelDetail }) => {
+const ChannelCard: React.FC<ChannelCardProps> = ({
+  channelDetail,
+  marginTop,
+}) => {
   return (
     <Box
       sx={{
@@ -17,6 +21,10 @@ const ChannelCard: React.FC<ChannelCardProps> = ({ channelDetail }) => {
         borderRadius: "20px",
         display: "flex",
         justifyContent: "center",
+        alignItems: "center",
+        height: "326px",
+        margin: "auto",
+        marginTop,
         width: { xs: "356px", md: "320px" },
       }}
     >
