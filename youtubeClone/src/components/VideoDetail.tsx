@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import ReactPlayer from "react-player";
 import { Typography, Box, Stack } from "@mui/material";
+import { Videos } from "./";
 
 import { fetchFromAPI } from "../utils/FetchFromAPI";
 import { CheckCircle } from "@mui/icons-material";
@@ -25,6 +26,7 @@ interface VideoDetailData {
 const VideoDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [videoDetail, setVideoDetail] = useState<VideoDetailData | null>(null);
+  const [videos, setVideos] = useState(null);
 
   useEffect(() => {
     fetchFromAPI(`videos?part=snippet,statistics&id=${id}`).then((data) => {
@@ -32,6 +34,11 @@ const VideoDetail: React.FC = () => {
         setVideoDetail(data.items[0]);
       }
     });
+    fetchFromAPI(`search?part=snippet&relatedToVvideoId=${id}&type=video`).then(
+      (data) => {
+        setVideos(data.items);
+      }
+    );
   }, [id]);
 
   if (!videoDetail?.snippet) return <div>Loading...</div>;
@@ -49,6 +56,7 @@ const VideoDetail: React.FC = () => {
             <ReactPlayer
               url={`https://www.youtube.com/watch?v=${id}`}
               className="react-player"
+              playing={true}
               controls
             />
             <Typography
@@ -99,6 +107,14 @@ const VideoDetail: React.FC = () => {
               </Stack>
             </Stack>
           </Box>
+        </Box>
+        <Box
+          px={2}
+          py={{ md: 1, xs: 5 }}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Videos videos={videos} direction="column" />
         </Box>
       </Stack>
     </Box>
